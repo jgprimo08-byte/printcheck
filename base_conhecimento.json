@@ -1,0 +1,231 @@
+{
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "cantos",
+      "label": "Os cantos da peça se levantaram da mesa?",
+      "help": "Observe a base da peça durante ou após a impressão."
+    },
+    {
+      "id": "aderencia",
+      "label": "A primeira camada solta ou adere mal?",
+      "help": "Considere o desprendimento, não a facilidade de remover a peça fria."
+    },
+    {
+      "id": "mesa_suja",
+      "label": "Há gordura ou resíduos na superfície de impressão?",
+      "help": "Se não verificou a superfície, selecione Não sei."
+    },
+    {
+      "id": "z_alto",
+      "label": "O bico ficou alto demais na primeira camada?",
+      "help": "As linhas ficam arredondadas e separadas, sem se unir à mesa."
+    },
+    {
+      "id": "corrente_ar",
+      "label": "Há corrente de ar atingindo a peça?",
+      "help": "Exemplo: ventilador externo ou janela com vento direto."
+    },
+    {
+      "id": "fios",
+      "label": "Há fios finos entre partes separadas da peça?",
+      "help": "Esse sintoma é conhecido como stringing."
+    },
+    {
+      "id": "retracao_desativada",
+      "label": "A retração está desativada no fatiador?",
+      "help": "Retração recolhe parte do filamento durante deslocamentos."
+    },
+    {
+      "id": "temperatura_alta",
+      "label": "A temperatura do bico supera a faixa do fabricante do filamento?",
+      "help": "Compare o ajuste com a embalagem ou ficha do material."
+    },
+    {
+      "id": "deslocamento",
+      "label": "As camadas se deslocaram lateralmente?",
+      "help": "Observe se uma parte da peça aparece fora de alinhamento."
+    },
+    {
+      "id": "correia_frouxa",
+      "label": "Há folga excessiva nas correias?",
+      "help": "Responda apenas se verificou conforme o manual da impressora."
+    },
+    {
+      "id": "colisao",
+      "label": "O bico bateu na peça durante a impressão?",
+      "help": "Considere apenas uma colisão observada."
+    },
+    {
+      "id": "falhas",
+      "label": "Há lacunas ou falta de material nas camadas?",
+      "help": "O sintoma pode indicar subextrusão."
+    },
+    {
+      "id": "carretel_preso",
+      "label": "O carretel ou o caminho do filamento está preso?",
+      "help": "Observe enroscos que impedem a alimentação."
+    },
+    {
+      "id": "bico_obstruido",
+      "label": "Há indício verificado de obstrução no bico?",
+      "help": "Se não realizou a verificação prevista pelo fabricante, escolha Não sei."
+    }
+  ],
+  "rules": [
+    {
+      "id": "R01",
+      "conditions": {
+        "aderencia": "sim",
+        "mesa_suja": "sim"
+      },
+      "fact": "superficie_inadequada",
+      "title": "Possível contaminação da mesa",
+      "action": "Limpar a superfície conforme as instruções do fabricante e o tipo de chapa.",
+      "source": "S1"
+    },
+    {
+      "id": "R02",
+      "conditions": {
+        "aderencia": "sim",
+        "z_alto": "sim"
+      },
+      "fact": "altura_inadequada",
+      "title": "Possível altura inicial inadequada",
+      "action": "Repetir a calibração da primeira camada conforme o modelo da impressora.",
+      "source": "S1"
+    },
+    {
+      "id": "R03",
+      "conditions": {
+        "cantos": "sim",
+        "aderencia": "sim"
+      },
+      "fact": "risco_aderencia",
+      "title": "Empenamento associado à baixa aderência",
+      "action": "Revisar a primeira camada e o perfil de impressão do material.",
+      "source": "S2"
+    },
+    {
+      "id": "R04",
+      "conditions": {
+        "cantos": "sim",
+        "corrente_ar": "sim"
+      },
+      "fact": "risco_termico",
+      "title": "Possível instabilidade térmica",
+      "action": "Evitar correntes de ar externas e seguir as orientações do perfil do material.",
+      "source": "S2"
+    },
+    {
+      "id": "R05",
+      "conditions": {
+        "fios": "sim",
+        "retracao_desativada": "sim"
+      },
+      "fact": "retracao_inadequada",
+      "title": "Possível retração inadequada",
+      "action": "Revisar a retração usando o perfil recomendado para a impressora e o filamento.",
+      "source": "S3"
+    },
+    {
+      "id": "R06",
+      "conditions": {
+        "fios": "sim",
+        "temperatura_alta": "sim"
+      },
+      "fact": "temperatura_inadequada",
+      "title": "Possível temperatura excessiva",
+      "action": "Retornar à faixa recomendada pelo fabricante e executar um teste controlado.",
+      "source": "S3"
+    },
+    {
+      "id": "R07",
+      "conditions": {
+        "deslocamento": "sim",
+        "correia_frouxa": "sim"
+      },
+      "fact": "transmissao_inadequada",
+      "title": "Possível folga na transmissão",
+      "action": "Verificar tensão e fixação das correias conforme o manual, com a máquina parada.",
+      "source": "S4"
+    },
+    {
+      "id": "R08",
+      "conditions": {
+        "deslocamento": "sim",
+        "colisao": "sim"
+      },
+      "fact": "colisao_observada",
+      "title": "Possível deslocamento por colisão",
+      "action": "Revisar interferências no trajeto e deformações na peça antes de repetir a impressão.",
+      "source": "S4"
+    },
+    {
+      "id": "R09",
+      "conditions": {
+        "falhas": "sim",
+        "carretel_preso": "sim"
+      },
+      "fact": "alimentacao_inadequada",
+      "title": "Possível restrição na alimentação",
+      "action": "Liberar o caminho do filamento e conferir a rotação do carretel.",
+      "source": "S5"
+    },
+    {
+      "id": "R10",
+      "conditions": {
+        "falhas": "sim",
+        "bico_obstruido": "sim"
+      },
+      "fact": "obstrucao_provavel",
+      "title": "Possível obstrução do bico",
+      "action": "Seguir o procedimento de inspeção e desobstrução específico do fabricante.",
+      "source": "S5"
+    },
+    {
+      "id": "R11",
+      "conditions": {
+        "superficie_inadequada": true,
+        "altura_inadequada": true
+      },
+      "fact": "revisao_primeira_camada",
+      "title": "Revisão combinada da primeira camada",
+      "action": "Verificar limpeza e calibração antes de alterar outros parâmetros.",
+      "source": "S1"
+    },
+    {
+      "id": "R12",
+      "conditions": {
+        "retracao_inadequada": true,
+        "temperatura_inadequada": true
+      },
+      "fact": "revisao_stringing",
+      "title": "Revisão combinada de stringing",
+      "action": "Revisar um parâmetro por vez e comparar uma peça de teste após cada ajuste.",
+      "source": "S3"
+    }
+  ],
+  "sources": {
+    "S1": {
+      "title": "First layer issues",
+      "url": "https://help.prusa3d.com/article/first-layer-issues_1804"
+    },
+    "S2": {
+      "title": "Warping",
+      "url": "https://help.prusa3d.com/article/warping_2011"
+    },
+    "S3": {
+      "title": "Stringing and oozing",
+      "url": "https://help.prusa3d.com/article/stringing-and-oozing_1805"
+    },
+    "S4": {
+      "title": "Layer shifting",
+      "url": "https://help.prusa3d.com/article/layer-shifting_2020"
+    },
+    "S5": {
+      "title": "Under-extrusion",
+      "url": "https://help.prusa3d.com/article/under-extrusion_2007"
+    }
+  }
+}
